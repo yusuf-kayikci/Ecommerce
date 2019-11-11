@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model IEnumerable<Product>
+@using NonFactors.Mvc.Grid;
+
+    <h1>Products</h1>
+
+@(Html
+    .Grid(Model)
+    .Build(columns =>
+    {
+        columns.Add(model => model.Name).Titled("Name");
+        columns.Add(model => model.ListPrice).Titled("List price");
+        columns.Add(model => model.ProductModel).Titled("Model");
+
+        columns.Add(model => model.Size).Titled("Size");
+        columns.Add(model => model.Style).Titled("Style");
+        columns.Add(model => model.ProductSubcategory.Name).Titled("Subcategory");
+    })
+    .Empty("No data found")
+    .Filterable()
+    .Sortable()
+    .Pageable()
+)
+
+
+
+
