@@ -4,28 +4,53 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@model IEnumerable<Product>
-@using NonFactors.Mvc.Grid;
 
-    <h1>Products</h1>
 
-@(Html
-    .Grid(Model)
-    .Build(columns =>
-    {
-        columns.Add(model => model.Name).Titled("Name");
-        columns.Add(model => model.ListPrice).Titled("List price");
-        columns.Add(model => model.ProductModel).Titled("Model");
+@(Html.Awe().Grid("Grid1")
+      .Reorderable()
+      .Columns(
+          new Column { Bind = "ProductId", Width = 150, Groupable = false, Resizable = false },
+          new Column { Bind = "Name" },
+          new Column { Bind = "ModifiedDate", MinWidth = 200 },
+          new Column { Bind = "ListPrice" },
+          new Column { Bind = "SellStartDate", Width = 120 }.Mod(o => o.Autohide()),
+          new Column { ClientFormat = Html.EditFormatForGrid("DinnersGrid"), Width = 55 }.Mod(o => o.Nohide()),
+          new Column { ClientFormat = Html.DeleteFormatForGrid("DinnersGrid"), Width = 55 }.Mod(o => o.Nohide()))
+        .Url(Url.Action("GetItems", "Product"))
 
-        columns.Add(model => model.Size).Titled("Size");
-        columns.Add(model => model.Style).Titled("Style");
-        columns.Add(model => model.ProductSubcategory.Name).Titled("Subcategory");
-    })
-    .Empty("No data found")
-    .Filterable()
-    .Sortable()
-    .Pageable()
+      //.Persistence(Persistence.Session) // save collapsed groups and nodes when switching between grid pages
+      //.ColumnsPersistence(Persistence.Session) // save columns (width, visibility, etc..) for browser session lifetime
+      .Resizable()
+      .Height(350)
+      .Selectable(SelectionType.Single)
+
+
 )
+
+<script>
+    console.log($);
+    $(function () {
+        $('#Grid1')
+            .on('aweselect', function () {
+                var selectedItems = $('#Grid1').data('api').getSelection();
+                console.log(selectedItems);
+                var productId = selectedItems[0].productId;
+
+                location.href = '@Url.Action("Index", "ProductDetail", new { productId = "js-id" })'
+              .replace("js-id", encodeURIComponent(productId));
+                @*location.href = '@Url.Action("Index" , "ProductDetail" , new { productId =  })'*@
+
+
+
+            })
+            .on('aweload', function () {
+                $('#selection1').empty();
+            });
+    });
+
+</script>
+
+
 
 
 

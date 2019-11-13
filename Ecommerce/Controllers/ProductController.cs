@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Ecommerce.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NonFactors.Mvc.Grid;
+using Omu.AwesomeMvc;
 
 namespace Ecommerce.Controllers
 {
@@ -17,11 +21,40 @@ namespace Ecommerce.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        // GET: Product
         public ActionResult Index()
         {
-            var products = _unitOfWork.ProductRepository.Get();
-            return View(products);
+            return View(null);
+        }
+
+        // GET: Product
+        [HttpPost]
+        public ActionResult GetItems(GridParams g)
+        {
+
+            Expression<Func<Product, object>>[] includes = { (x => x.ProductProductPhoto) };
+
+            var products = _unitOfWork.ProductRepository.IncludeMultiple(includes , x => x.ProductProductPhoto.Count >  0).AsQueryable();
+
+            //Expression<Func<Product, object>>[] includeFunction = { (x => x.ProductModel) , (x => x.ProductReview)};
+            //Expression<Func<Product, bool>> filter = (x => x.ProductModelId != null && x.ProductReview.Count > 0); 
+            //var products = _unitOfWork.ProductRepository.IncludeMultiple(includeFunction ,filter).ToList();
+
+            //return View(products);
+
+
+            return Json(new GridModelBuilder<Product>(products, g)
+            {
+                Key = "Id" ,// needed for Entity Framework | nesting | tree | api
+                KeyProp = p => p.ProductId,
+                Map = p => new
+                {
+                    p.ProductId,
+                    p.Name,
+                    p.ModifiedDate,
+                    p.ListPrice,
+                    p.SellStartDate,
+                }
+            }.Build());
         }
 
         // GET: Product/Details/5
@@ -36,6 +69,9 @@ namespace Ecommerce.Controllers
             return View();
         }
 
+
+
+
         // POST: Product/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -45,7 +81,7 @@ namespace Ecommerce.Controllers
             {
                 // TODO: Add insert logic here
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(GetItems));
             }
             catch
             {
@@ -68,7 +104,7 @@ namespace Ecommerce.Controllers
             {
                 // TODO: Add update logic here
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(GetItems));
             }
             catch
             {
@@ -88,10 +124,10 @@ namespace Ecommerce.Controllers
         public ActionResult Delete(int id, IFormCollection collection)
         {
             try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction(nameof(Index));
+            { 
+                _unitOfWork.ProductRepository.Delete(id);
+                _unitOfWork.Commit();                
+                return RedirectToAction(nameof(GetItems));
             }
             catch
             {

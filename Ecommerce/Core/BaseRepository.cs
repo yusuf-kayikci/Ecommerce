@@ -25,8 +25,7 @@ class BaseRepository<TEntity> : IRepository<TEntity> where TEntity : class
 
     public virtual IEnumerable<TEntity> Get(
         Expression<Func<TEntity, bool>> filter = null,
-        Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-        string includeProperties = "")
+        Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null)
     {
         IQueryable<TEntity> query = dbSet;
 
@@ -34,16 +33,6 @@ class BaseRepository<TEntity> : IRepository<TEntity> where TEntity : class
         {
             query = query.Where(filter);
         }
-
-        if (includeProperties != null)
-        {
-            foreach (var includeProperty in includeProperties.Split
-            (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-            {
-                query = query.Include(includeProperty);
-            }
-        }
-
 
         if (orderBy != null)
         {
@@ -85,4 +74,35 @@ class BaseRepository<TEntity> : IRepository<TEntity> where TEntity : class
         dbSet.Attach(entityToUpdate);
         context.Entry(entityToUpdate).State = EntityState.Modified;
     }
+
+
+    public virtual IEnumerable<TEntity> IncludeMultiple(Expression<Func<TEntity, object>>[] includes , Expression<Func<TEntity, bool>> filter = null)
+    {
+        IQueryable<TEntity> entities = dbSet;
+        if (filter != null)
+        {
+            entities = entities.Where(filter);
+        }
+        foreach (var item in includes)
+        {
+            entities = entities.Include(item);
+        }
+        return entities;
+    }
+
+    public virtual Tuple<IEnumerable<TEntity> , int> GetWithPagination(int pageNumber,int pageSize = 10 , Expression<Func<TEntity, bool>> filter = null)
+    {
+        IQueryable<TEntity> query = dbSet;
+        if (filter != null)
+        {
+            query = query.Where(filter);
+        }
+
+        var totalPageSize = query.Count();
+        query = query.Skip(pageNumber * pageSize).Take(pageSize);
+
+        return new Tuple<IEnumerable<TEntity>, int>(query, totalPageSize );
+
+    }
+
 }
