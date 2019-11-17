@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Ecommerce.Api.Models;
 using Ecommerce.Common.Core;
 using Ecommerce.Common.Models;
 using Microsoft.AspNetCore.Http;
@@ -25,12 +26,13 @@ namespace Ecommerce.Api.Controllers
         [HttpGet]
         public IEnumerable<Product> Get()
         {
-            var products = _uof.ProductRepository.Get(x => x.ProductReview.Count > 0);
+            var products = _uof.ProductRepository.Get();
             return products;
         }
         [HttpGet("GetWithPagination/{page?}")]
-        public StaticPagedList<Product> GetWithPagination(int page)
+        public PaginationModel<Product> GetWithPagination(int page)
         {
+            //public StaticPagedList(IEnumerable<T> subset, int pageNumber, int pageSize, int totalItemCount);
             var pagedProducts = _uof.ProductRepository.GetWithPagination(page);
             return pagedProducts;
         }

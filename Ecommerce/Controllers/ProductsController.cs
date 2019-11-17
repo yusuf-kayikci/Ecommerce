@@ -24,8 +24,9 @@ namespace Ecommerce.Controllers
         // GET: Product
         public ActionResult Index(int page)
         {
-            var products = _uof.ProductRepository.GetWithPagination(page);                
-            return View(products);
+            var products = _uof.ProductRepository.GetWithPagination(page);
+            var pagedProducts = new StaticPagedList<Product>(products.Items, products.PageNumber, products.PageSize, products.TotalItemCount);
+            return View(pagedProducts);
         }
 
 

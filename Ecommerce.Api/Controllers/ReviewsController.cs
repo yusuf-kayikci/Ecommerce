@@ -31,12 +31,12 @@ namespace Ecommerce.Api.Controllers
             return reviews;
         }
 
-        [HttpGet("GetWithPagination/{page?}")]
-        public StaticPagedList<ProductReview> GetWithPagination(int page)
-        {
-            var pagedReviews = _uof.ProductReviewRepository.GetWithPagination(page);
-            return pagedReviews;
-        }
+        //[HttpGet("GetWithPagination/{page?}")]
+        //public StaticPagedList<ProductReview> GetWithPagination(int page)
+        //{
+        //    var pagedReviews = _uof.ProductReviewRepository.GetWithPagination(page);
+        //    return pagedReviews;
+        //}
 
         // GET: api/Reviews/5
         [HttpGet("{id}", Name = "Get")]

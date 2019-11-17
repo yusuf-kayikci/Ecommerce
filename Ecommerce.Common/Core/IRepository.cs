@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ecommerce.Common.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -19,7 +20,7 @@ namespace Ecommerce.Common.Core
         void Delete(TEntity entityToDelete);
         void Delete(object id);
         IEnumerable<TEntity> IncludeMultiple(Expression<Func<TEntity, object>>[] includes, Expression<Func<TEntity, bool>> filter = null);
-        StaticPagedList<TEntity> GetWithPagination(int pageIndex, int pageSize = 10, Expression<Func<TEntity, bool>> filter = null);
+        PaginationModel<TEntity> GetWithPagination(int pageIndex, int pageSize = 10, Expression<Func<TEntity, bool>> filter = null);
     }
 
 }

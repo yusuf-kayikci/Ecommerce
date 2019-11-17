@@ -92,7 +92,7 @@ namespace Ecommerce.Common.Core
             return entities;
         }
 
-        public virtual StaticPagedList<TEntity> GetWithPagination(int pageIndex, int pageSize = 10, Expression<Func<TEntity, bool>> filter = null)
+        public virtual PaginationModel<TEntity> GetWithPagination(int pageIndex, int pageSize = 10, Expression<Func<TEntity, bool>> filter = null)
         {
             var pageNumber = (pageIndex < 1) ? 0 : pageIndex - 1; 
             IQueryable<TEntity> query = dbSet;
@@ -100,9 +100,15 @@ namespace Ecommerce.Common.Core
             {
                 query = query.Where(filter);
             }
-            var totalPageSize = query.Count();
+            var totalItemCount = query.Count();
             var list = query.Skip(pageNumber * pageSize).Take(pageSize);
-            return new StaticPagedList<TEntity>(list, pageNumber + 1, pageSize, totalPageSize);
+            return new PaginationModel<TEntity>
+            {
+                Items = list,
+                PageNumber = pageNumber + 1,
+                PageSize = pageSize,
+                TotalItemCount = totalItemCount
+            }; 
         }
 
     }
