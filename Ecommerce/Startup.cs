@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Ecommerce.Extensions;
+using Ecommerce.Common.Extensions;
+using Ecommerce.Common.Models;
+using Ecommerce.Common.Extensions;
 using Ecommerce.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

@@ -23,8 +23,38 @@ using Ecommerce.Models;
 
 #line default
 #line hidden
+#line 3 "D:\Project\Ecommerce\Ecommerce\Views\_ViewImports.cshtml"
+using Omu.AwesomeMvc;
+
+#line default
+#line hidden
+#line 5 "D:\Project\Ecommerce\Ecommerce\Views\_ViewImports.cshtml"
+using Omu.Awem.Helpers;
+
+#line default
+#line hidden
+#line 7 "D:\Project\Ecommerce\Ecommerce\Views\_ViewImports.cshtml"
+using Ecommerce.Helpers;
+
+#line default
+#line hidden
+#line 8 "D:\Project\Ecommerce\Ecommerce\Views\_ViewImports.cshtml"
+using Ecommerce.Helpers.Awesome;
+
+#line default
+#line hidden
+#line 9 "D:\Project\Ecommerce\Ecommerce\Views\_ViewImports.cshtml"
+using Ecommerce.Utils;
+
+#line default
+#line hidden
+#line 10 "D:\Project\Ecommerce\Ecommerce\Views\_ViewImports.cshtml"
+using Ecommerce.ViewModels.Input;
+
+#line default
+#line hidden
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"7091c65830b0329e613be026ede8a57552863778", @"/Views/_ViewStart.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"6bbcd7c65731fc074a835809e73fcf2cf9014c29", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"d7fd34b795b959518f2a20bc3b60c6ea2d5f79d8", @"/Views/_ViewImports.cshtml")]
     public class Views__ViewStart : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
     {
         #pragma warning disable 1998

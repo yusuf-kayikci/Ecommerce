@@ -23,13 +23,43 @@ using Ecommerce.Models;
 
 #line default
 #line hidden
+#line 3 "D:\Project\Ecommerce\Ecommerce\Views\_ViewImports.cshtml"
+using Omu.AwesomeMvc;
+
+#line default
+#line hidden
+#line 5 "D:\Project\Ecommerce\Ecommerce\Views\_ViewImports.cshtml"
+using Omu.Awem.Helpers;
+
+#line default
+#line hidden
+#line 7 "D:\Project\Ecommerce\Ecommerce\Views\_ViewImports.cshtml"
+using Ecommerce.Helpers;
+
+#line default
+#line hidden
+#line 8 "D:\Project\Ecommerce\Ecommerce\Views\_ViewImports.cshtml"
+using Ecommerce.Helpers.Awesome;
+
+#line default
+#line hidden
+#line 9 "D:\Project\Ecommerce\Ecommerce\Views\_ViewImports.cshtml"
+using Ecommerce.Utils;
+
+#line default
+#line hidden
+#line 10 "D:\Project\Ecommerce\Ecommerce\Views\_ViewImports.cshtml"
+using Ecommerce.ViewModels.Input;
+
+#line default
+#line hidden
 #line 1 "D:\Project\Ecommerce\Ecommerce\Views\Shared\_CookieConsentPartial.cshtml"
 using Microsoft.AspNetCore.Http.Features;
 
 #line default
 #line hidden
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"d4fdc3d9e6bc2a119e86fb23894c311b8c5abaf6", @"/Views/Shared/_CookieConsentPartial.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"6bbcd7c65731fc074a835809e73fcf2cf9014c29", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"d7fd34b795b959518f2a20bc3b60c6ea2d5f79d8", @"/Views/_ViewImports.cshtml")]
     public class Views_Shared__CookieConsentPartial : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("asp-area", "", global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -81,7 +111,7 @@ using Microsoft.AspNetCore.Http.Features;
             WriteLiteral("    <div id=\"cookieConsent\" class=\"alert alert-info alert-dismissible fade show\" role=\"alert\">\r\n        Use this space to summarize your privacy and cookie use policy. ");
             EndContext();
             BeginContext(439, 72, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d4fdc3d9e6bc2a119e86fb23894c311b8c5abaf65109", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d4fdc3d9e6bc2a119e86fb23894c311b8c5abaf65871", async() => {
                 BeginContext(497, 10, true);
                 WriteLiteral("Learn More");
                 EndContext();
