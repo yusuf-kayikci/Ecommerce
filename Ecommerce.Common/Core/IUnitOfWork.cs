@@ -29,6 +29,7 @@ namespace Ecommerce.Common.Core
         IRepository<WorkOrder> WorkOrderRepository { get; }
         IRepository<WorkOrderRouting> WorkOrderRoutingRepository { get; }
         void Commit();
+        void Rollback();
     }
 
 }

@@ -67,5 +67,14 @@ namespace Ecommerce.Common.Core
         {
             _context.SaveChanges();
         }
+
+        public void Rollback()
+        {
+            _context
+                .ChangeTracker
+                .Entries()
+                .ToList()
+                .ForEach(x => x.Reload());
+        }
     }
 }

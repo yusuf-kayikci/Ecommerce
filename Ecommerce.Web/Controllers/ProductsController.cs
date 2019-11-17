@@ -25,22 +25,44 @@ namespace Ecommerce.Web.Controllers
         // GET: Products
         public ActionResult Index(int page)
         {
-            StaticPagedList<Product> pagedProducts;
-            using (var client = new HttpClient())
+            try
             {
-                HttpResponseMessage response = client.GetAsync(_baseUrl + "products/GetWithPagination/" + page).Result;
-                var jsonString = response.Content.ReadAsStringAsync().Result;
-                PaginationModel<Product> products = JsonConvert.DeserializeObject<PaginationModel<Product>>(jsonString);
-                pagedProducts = new StaticPagedList<Product>(products.Items, products.PageNumber, products.PageSize, products.TotalItemCount);
+                StaticPagedList<Product> pagedProducts;
+                using (var client = new HttpClient())
+                {
+                    HttpResponseMessage response = client.GetAsync(_baseUrl + "products/GetWithPagination/" + page).Result;
+                    var jsonString = response.Content.ReadAsStringAsync().Result;
+                    PaginationModel<Product> products = JsonConvert.DeserializeObject<PaginationModel<Product>>(jsonString);
+                    pagedProducts = new StaticPagedList<Product>(products.Items, products.PageNumber, products.PageSize, products.TotalItemCount);
+                }
+                return View(pagedProducts);
             }
-
-            return View(pagedProducts);
+            catch (Exception)
+            {
+                return View();
+            }
         }
 
         // GET: Products/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            try
+            {
+                Product productDetail;
+                using (var client = new HttpClient())
+                {
+                    HttpResponseMessage response = client.GetAsync(_baseUrl + "products/" + id).Result;
+                    var jsonString = response.Content.ReadAsStringAsync().Result;
+                    productDetail = JsonConvert.DeserializeObject<Product>(jsonString);
+                }
+                return View(productDetail);
+            }
+            catch (Exception)
+            {
+                return View();
+            }
+
+
         }
 
         // GET: Products/Create
@@ -56,8 +78,6 @@ namespace Ecommerce.Web.Controllers
         {
             try
             {
-                // TODO: Add insert logic here
-
                 return RedirectToAction(nameof(Index));
             }
             catch

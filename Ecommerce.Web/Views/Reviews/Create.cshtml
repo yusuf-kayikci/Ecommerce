@@ -1,0 +1,42 @@
+﻿@model Ecommerce.Common.Models.ProductReview
+<div class="row">
+    <div class="col" style="border-style:inset;border-color:grey;border-radius:5px;border-width:2px">
+        <form asp-action="Create" asp-controller="Reviews">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <div class="form-group" hidden>
+                    <label asp-for="ProductId" class="control-label"></label>
+                    <input asp-for="ProductId" readonly class="form-control" />
+                    <span asp-validation-for="ProductId" class="text-danger"></span>
+                </div>
+                <div class="form-group col">
+                    <label asp-for="ReviewerName" class="control-label"></label>
+                    <input asp-for="ReviewerName" class="form-control" />
+                    <span asp-validation-for="ReviewerName" class="text-danger"></span>
+                </div>
+                <div class="form-group col">
+                    <label asp-for="EmailAddress" class="control-label"></label>
+                    <input asp-for="EmailAddress" class="form-control" />
+                    <span asp-validation-for="EmailAddress" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col">
+                    <label asp-for="Comments" class="control-label"></label>
+                    <input asp-for="Comments" class="form-control" />
+                    <span asp-validation-for="Comments" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+        
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

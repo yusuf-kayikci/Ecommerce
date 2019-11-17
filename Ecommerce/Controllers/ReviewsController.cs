@@ -6,6 +6,7 @@ using Ecommerce.Common.Core;
 using Ecommerce.Common.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using X.PagedList;
 
 namespace Ecommerce.Controllers
 {
@@ -23,15 +24,30 @@ namespace Ecommerce.Controllers
         // GET: Reviews
         public ActionResult Index(int page)
         {
-            var reviews = _uof.ProductReviewRepository.GetWithPagination(page);
-            return View(reviews);
+            try
+            {
+                var reviews = _uof.ProductReviewRepository.GetWithPagination(page);
+                var pagedList = new StaticPagedList<ProductReview>(reviews.Items, reviews.PageNumber, reviews.PageSize, reviews.TotalItemCount);
+                return View(pagedList);
+            }
+            catch (Exception)
+            {
+                return View();
+            }
         }
 
         // GET: Reviews/Details/5
         public ActionResult Details(int id)
         {
-            var review = _uof.ProductReviewRepository.GetByID(id);
-            return View(review);
+            try
+            {
+                var review = _uof.ProductReviewRepository.GetByID(id);
+                return View(review);
+            }
+            catch (Exception )
+            {
+                return View();
+            }
         }
         public ActionResult Create()
         {
@@ -45,7 +61,6 @@ namespace Ecommerce.Controllers
         {
             try
             {
-                // TODO: Add insert logic here
 
                 return RedirectToAction(nameof(Index));
             }

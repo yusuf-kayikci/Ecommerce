@@ -1,0 +1,173 @@
+﻿@model Ecommerce.Common.Models.Product
+
+@{
+    ViewData["Title"] = "Details";
+    ViewData["isVisibleNewReview"] = false;
+    ViewBag.Show = false;
+}
+
+
+@{
+    /*
+     *Ürün adı,
+     * ürün görselleri,
+     * fiyat,
+     * stok sayısı,
+     * açıklama,
+     * aktif/pasif,
+     * marka,
+     * indirim oranı,
+     * ürün özellikleri/etiketleri (aynı gün kargo, sınırlı stok, kampanyalı ürün)
+     */
+}
+
+
+
+<div>
+    <h4>Details</h4>
+    <hr />
+
+
+    <div class="row">
+        <div class="col">
+            <div class="row">
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Name)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+            </div>
+            <div class="row">
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.SafetyStockLevel)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.SafetyStockLevel)
+                </dd>
+            </div>
+            <div class="row">
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.MakeFlag)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.MakeFlag)
+                </dd>
+            </div>
+            <div class="row">
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.FinishedGoodsFlag)
+                </dt>
+                <did class="col-sm-8">
+                    @Html.DisplayFor(model => model.FinishedGoodsFlag)
+                </did>
+            </div>
+            <div class="row">
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Color)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Color)
+                </dd>
+            </div>
+            <div class="row">
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.StandardCost)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.StandardCost)
+                </dd>
+            </div>
+            <div class="row">
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.ListPrice)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.ListPrice)
+                </dd>
+            </div>
+            <div class="row">
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Size)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Size)
+                </dd>
+            </div>
+            <div class="row">
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Style)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Style)
+                </dd>
+            </div>
+            <div class="row">
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.DaysToManufacture)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.DaysToManufacture)
+                </dd>
+            </div>
+            <div class="row">
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Weight)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Weight)
+                </dd>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+@*@using (Html.BeginForm("Login", "Auth", FormMethod.Post))
+    {
+        @Html.TextBoxFor(model => model.ProductReview.)
+        @Html.TextBoxFor(model => model.ProductReview.Email)
+        @Html.PasswordFor(model => model.Password)
+    }*@
+
+
+
+<br />
+<br />
+
+@if (Model.ProductReview.Count < 1)
+{
+    <div>There are no reviews for this product</div>
+}
+else
+{
+    foreach (var item in Model.ProductReview)
+    {
+        <div class="row" style=";margin-bottom:10px;">
+            <div class="col-sm-3" style="word-break:break-word;">@item.EmailAddress</div>
+            <div class="col-sm-7">@item.Comments</div>
+            <div class="col-sm-2">@item.ReviewDate</div>
+        </div>
+    }
+}
+
+
+<br />
+<br />
+
+
+@Html.Partial("../Reviews/Create", new Ecommerce.Common.Models.ProductReview() { ProductId = Model.ProductId })
+
+@*@using (Html.BeginForm("Create", "Reviews", new { productId = Model.ProductId }))
+    {
+        <input type="submit" class="btn btn-link" value="Write a Review" />
+    }*@
+
+
+
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

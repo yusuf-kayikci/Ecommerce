@@ -25,10 +25,18 @@ namespace Ecommerce.Api.Controllers
 
         // GET: api/Reviews
         [HttpGet]
-        public IEnumerable<ProductReview> Get()
+        public ActionResult<IEnumerable<ProductReview>> Get()
         {
-            var reviews = _uof.ProductReviewRepository.Get();
-            return reviews;
+            try
+            {
+                var reviews = _uof.ProductReviewRepository.Get();
+                return Ok(reviews);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+
         }
 
         //[HttpGet("GetWithPagination/{page?}")]
@@ -40,16 +48,37 @@ namespace Ecommerce.Api.Controllers
 
         // GET: api/Reviews/5
         [HttpGet("{id}", Name = "Get")]
-        public ProductReview Get(int id)
+        public ActionResult<ProductReview> Get(int id)
         {
-            var review = _uof.ProductReviewRepository.GetByID(id);
-            return review;
+            try
+            {
+                var review = _uof.ProductReviewRepository.GetByID(id);
+                return Ok(review);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+
+
         }
 
         // POST: api/Reviews
         [HttpPost]
-        public void Post([FromBody] string value)
+        public ActionResult<ProductReview> Post([FromBody]ProductReview review)
         {
+            try
+            {
+                _uof.ProductReviewRepository.Insert(review);
+                _uof.Commit();
+                return Ok(review);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+
+
         }
 
         // PUT: api/Reviews/5
@@ -62,10 +91,19 @@ namespace Ecommerce.Api.Controllers
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public ActionResult Delete(int id)
         {
-            _uof.ProductReviewRepository.Delete(id);
-            _uof.Commit();
+            try
+            {
+                _uof.ProductReviewRepository.Delete(id);
+                _uof.Commit();
+                return Ok();
+            }
+            catch (Exception)
+            {
+                _uof.Rollback();
+                return BadRequest();
+            }
         }
     }
 }

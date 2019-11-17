@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Ecommerce.Api.Models;
+using System.Linq.Expressions;
 using Ecommerce.Common.Core;
 using Ecommerce.Common.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using X.PagedList;
 
 namespace Ecommerce.Api.Controllers
 {
@@ -30,44 +27,93 @@ namespace Ecommerce.Api.Controllers
             return products;
         }
         [HttpGet("GetWithPagination/{page?}")]
-        public PaginationModel<Product> GetWithPagination(int page)
+        public ActionResult<PaginationModel<Product>>  GetWithPagination(int page)
         {
-            //public StaticPagedList(IEnumerable<T> subset, int pageNumber, int pageSize, int totalItemCount);
-            var pagedProducts = _uof.ProductRepository.GetWithPagination(page);
-            return pagedProducts;
+            try
+            {
+                var pagedProducts = _uof.ProductRepository.GetWithPagination(page, 10);
+                return Ok(pagedProducts);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+
         }
 
         // GET: api/Products/5
         [HttpGet("{id}")]
-        public Product Get(int id)
+        public ActionResult<Product> Get(int id)
         {
-            var product = _uof.ProductRepository.GetByID(id);
-            return product;
+            try
+            {
+                Expression<Func<Product, object>>[] includes = { (x => x.ProductReview) };
+                var product = _uof.ProductRepository.IncludeMultiple(includes, x => x.ProductId == id).SingleOrDefault();
+                return Ok(product);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+
         }
 
         // POST: api/Products
         [HttpPost]
-        public void Post([FromBody] Product product)
+        public ActionResult Post([FromBody] Product product)
         {
-            _uof.ProductRepository.Insert(product);
-            _uof.Commit();
+            try
+            {
+                _uof.ProductRepository.Insert(product);
+                _uof.Commit();
+                return Ok();
+            }
+            catch (Exception)
+            {
+                _uof.Rollback();
+                return BadRequest();
+            }
+
+
         }
 
         // PUT: api/Products/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] Product product)
+        public ActionResult Put(int id, [FromBody] Product product)
         {
-            var oldProduct = _uof.ProductRepository.GetByID(id);
-            _uof.ProductRepository.Insert(product);
-            _uof.Commit();
+            try
+            {
+                _uof.ProductRepository.Update(product);
+                _uof.Commit();
+                return Ok();
+            }
+            catch (Exception)
+            {
+                _uof.Rollback();
+                return BadRequest();
+            }
+
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public ActionResult Delete(int id)
         {
-            _uof.ProductRepository.Delete(id);
-            _uof.Commit();
+            try
+            {
+                _uof.ProductRepository.Delete(id);
+                _uof.Commit();
+                return Ok();
+            }
+            catch (Exception)
+            {
+                _uof.Rollback();
+                return BadRequest();
+            }
+
+
         }
+
+
     }
 }

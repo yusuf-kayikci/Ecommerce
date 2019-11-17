@@ -1,20 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Ecommerce.Common.Extensions;
+﻿using Ecommerce.Common.Extensions;
 using Ecommerce.Common.Models;
-using Ecommerce.Common.Extensions;
-using Ecommerce.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Omu.AwesomeMvc;
 
 namespace Ecommerce
 {
@@ -29,11 +21,6 @@ namespace Ecommerce
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var provider = new AweMetaProvider();
-            services.AddMvc(o =>
-            {
-                o.ModelMetadataDetailsProviders.Add(provider);
-            });
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
