@@ -118,6 +118,8 @@ namespace Ecommerce.Controllers
         // GET: Product/Delete/5
         public ActionResult Delete(int id)
         {
+
+
             var product = _uof.ProductRepository.GetByID(id);
             return View(product);
         }
@@ -129,6 +131,12 @@ namespace Ecommerce.Controllers
         {
             try
             {
+                //CASCADE PROBLEM WİTH MULTI TABLE NOT JUST REVIEWS
+                //var reviewsOfProduct = _uof.ProductReviewRepository.Get(x => x.ProductId == id);
+                //foreach (var review in reviewsOfProduct)
+                //{
+                //    _uof.ProductReviewRepository.Delete(review.ProductReviewId);
+                //}
                 var product = _uof.ProductRepository.GetByID(id);
                 _uof.ProductRepository.Delete(product);
                 _uof.Commit();
@@ -136,6 +144,7 @@ namespace Ecommerce.Controllers
             }
             catch (Exception ex)
             {
+                _uof.Rollback();
                 return View();
             }
         }
